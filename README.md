@@ -1,7 +1,6 @@
 # KAiREX Open API docs (v 0.9)
 
-Kairex provides an open API for our clients to access Kairex platform and control their accounts with their customized software.  
-The base URL is "https://api.kairex.com/{version}".   (All requests should be application/json content type. )
+Kairex provides an open API for our clients to access Kairex platform and control their accounts with their customized software. The base URL is "https://api.kairex.com/{version}".   (All requests should be application/json content type. )
 
 This page explains about how to use our API and how to set up your software to use our API. 
 
