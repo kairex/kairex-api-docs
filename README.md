@@ -23,7 +23,7 @@ With the public API, you can get Kairex's market data such as ticker and orderbo
 
 ### - TICKER 
 ```text
-[GET] https://api.kairex.com/v1/market/ticker?quote=BTC&base=KAI
+URL : [GET] https://api.kairex.com/v1/market/ticker?quote=BTC&base=KAI
 
 Request : `quote`, `base` 
 
@@ -39,13 +39,12 @@ Response :
   ,"closed":"0.00000072"
   ,"change":"0.00000005"
   ,"changePercent":"6.9400"
-  ,"rankNum":null
 }
 ```
 
 ### - ORDERBOOK 
 ```text
-[GET] https://api.kairex.com/v1/market/orderbook?quote=BTC&base=KAI
+URL : [GET] https://api.kairex.com/v1/market/orderbook?quote=BTC&base=KAI
 
 Request : `quote`, `base` 
 
@@ -103,7 +102,7 @@ private String signature(String apiKey, Integer nonce,String secretKey) throws E
 
 ### - USER BALANCE 
 ```text
-[GET] https://api.kairex.com/v1/balance?currency=KAI
+URL : [GET] https://api.kairex.com/v1/balance?currency=KAI
 
 Request : `currency` 
 
@@ -112,37 +111,40 @@ Response : {"currency":"BTC","available":"0.00019925","reserved":"0.00000000"}
 
 ### - BUY
 ```text
-[POST] https://api.kairex.com/v1/order/buy
+URL : [POST] https://api.kairex.com/v1/order/buy
 
 Request : `quote`, `base`, `price`, `amount` 
 (If the price and amount values exceed 8 decimal places, these are rounded down)
 
 Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}
+           {"code":"INSUFFICIENT","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
 ```
 
 ### - SELL 
 ```text
-[POST] https://api.kairex.com/v1/order/sell
+URL : [POST] https://api.kairex.com/v1/order/sell
 
 Request : `quote`, `base`, `price`, `amount`
 (If the price and amount values exceed 8 decimal places, these are rounded down)
 
 Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}
+           {"code":"INSUFFICIENT","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
 ```
 
 ### - CANCEL 
 ```text
-[POST] https://api.kairex.com/v1/order/cancel
+URL : [POST] https://api.kairex.com/v1/order/cancel
 
 Request : `quote`, `base`, `orderId`
 
-Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}
-
+Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}           
            {"code":"ALREADY_ORDERED","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
+           {"code":"ORDER_NOT_FOUND","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
+           {"detail":[{"field":"orderId","code":"EMPTY"}],"httpStatusCode":400,"code":"VALIDATION_FAIL","httpStatus":"BAD_REQUEST"}
 ```
 ### - OPEN ORDER HISTORY
 ```text
-[GET] https://api.kairex.com/v1/order/history
+URL : [GET] https://api.kairex.com/v1/order/history
 
 Request : `quote`, `base`, `page`, `rows` 
 
@@ -164,7 +166,7 @@ Response :
 ```
 ### - TX HISTORY 
 ```text
-[GET] https://api.kairex.com/v1/order/tx/history
+URL : [GET] https://api.kairex.com/v1/order/tx/history
 
 Request : `quote`, `base`, `page`, `rows`
 
