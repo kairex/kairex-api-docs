@@ -5,11 +5,11 @@ Kairex provides an open API for our clients to access Kairex platform and contro
 This page explains about how to use our API and how to set up your software to use our API. 
 
 
+```text
 **NOTE: Request limit**
-
 We have a request limit based on IP for public API and on API key for private API. You cannot ask more than 600 requests per 10 minutes. 
 If you exceed this limit, Kairex returns http status code 429, meaning "too many requests in a given amount of time". 
-
+```
 
 
 ***
