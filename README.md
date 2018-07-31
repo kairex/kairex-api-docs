@@ -77,14 +77,17 @@ private String signature(String apiKey, Integer nonce,String secretKey) throws E
 
 ### - USER BALANCE 
 [GET] https://api.kairex.com/v1/balance?currency=KAI
+
 Params : `currency` 
 
 ### - BUY 
 [POST] https://api.kairex.com/v1/order/buy
+
 Params : `price`, `amount`, `quote`, `base`
 
 ### - SELL 
 [POST] https://api.kairex.com/v1/order/sell
+
 Params : `price`, `amount`, `quote`, `base`
 
 ### - CANCEL 
