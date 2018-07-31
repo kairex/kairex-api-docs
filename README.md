@@ -6,7 +6,8 @@ This page explains about how to use our API and how to set up your software to u
 
 
 ```text
-**NOTE: Request limit**
+NOTE: Request limit
+
 We have a request limit based on IP for public API and on API key for private API. 
 You cannot ask more than 600 requests per 10 minutes. 
 If you exceed this limit, Kairex returns http status code 429, meaning "too many requests in a given amount of time". 
@@ -44,11 +45,11 @@ response :
 
 To use our account API, it is required to provide your API key, a nonce and a signature in your request header. 
 
-X-KAIREX-APIKEY : It is your API key value and you can get an API key and secret key as a pair from kairex.com(URL 넣어줄 것). 
+**X-KAIREX-APIKEY** : It is your API key value and you can get an API key and secret key as a pair from kairex.com. 
 
-X-KAIREX-NONCE : It is an integer number which must be with your every request and must be increasing. We generally use unix time as a nonce. 
+**X-KAIREX-NONCE** : It is an integer number which must be with your every request and must be increasing. We generally use unix time as a nonce. 
 
-X-KAIREX-SIGNATURE: You can make a signature with your secret key, API key and a nonce. Signature is a HMAC-SHA256 encoded message containing a nonce and your API key. 
+**X-KAIREX-SIGNATURE** : You can make a signature with your secret key, API key and a nonce. Signature is a HMAC-SHA256 encoded message containing a nonce and your API key. 
 
 
 For more details, please refer to the following samples. 
