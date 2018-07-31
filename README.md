@@ -1,14 +1,14 @@
 # KAiREX Open API docs (v 0.9)
 
-Kairex provides an open API for our clients to access Kairex platform and control their accounts with their customized software. The base URL is "https://api.kairex.com/{version}".   (All requests should be application/json content type. )
+Kairex provides an open API for our clients to access Kairex platform and use their accounts with their customized software. The base URL is "https://api.kairex.com/{version}".   (All requests have to be of application/json content type. )
 
-This page explains about how to use our API and how to set up your software to use our API. 
+This page explains how to use our API and how to set up your software for using our API. 
 
 
 ```text
 NOTE: Request limit
 
-We have a request limit based on IP for public API and on API key for private API. 
+The number of requests are limited based on IP for public API or on API key for private API. 
 You cannot ask more than 600 requests per 10 minutes. 
 If you exceed this limit, Kairex returns http status code 429, meaning "too many requests in a given amount of time". 
 ```
@@ -18,7 +18,7 @@ If you exceed this limit, Kairex returns http status code 429, meaning "too many
 
 ## PUBLIC API 
 
-With the public API, you can get Kairex's market data such as ticker and orderbook. It is open for every clients. 
+With the public API, you can get Kairex's market data such as ticker and orderbook. It is open for any clients. 
 
 
 
@@ -45,11 +45,11 @@ response :
 
 To use our account API, it is required to provide your API key, a nonce and a signature in your request header. 
 
-**X-KAIREX-APIKEY** : It is your API key value and you can get an API key and secret key as a pair from kairex.com. 
+**X-KAIREX-APIKEY** : Your API key value. You can get a pair of an API key and secret key from kairex.com. 
 
-**X-KAIREX-NONCE** : It is an integer number which must be with your every request and must be increasing. We generally use unix time as a nonce. 
+**X-KAIREX-NONCE** : An integer number which must be incremented with your every request. We generally use unix time as a nonce. 
 
-**X-KAIREX-SIGNATURE** : You can make a signature with your secret key, API key and a nonce. Signature is a HMAC-SHA256 encoded message containing a nonce and your API key. 
+**X-KAIREX-SIGNATURE** : A signature which you make with your secret key, API key and a nonce. This is an HMAC-SHA256 encoded message containing a nonce and your API key. 
 
 
 For more details, please refer to the following samples. 
@@ -83,22 +83,29 @@ Params : `currency`
 ### - BUY 
 [POST] https://api.kairex.com/v1/order/buy
 
-Params : `price`, `amount`, `quote`, `base`
+Params : `quote`, `base`, `price`, `amount` 
+```text
+If the price and amount values exceed 8 decimal places, these are rounded down
+```
 
 ### - SELL 
 [POST] https://api.kairex.com/v1/order/sell
 
-Params : `price`, `amount`, `quote`, `base`
+Params : `quote`, `base`, `price`, `amount`
+```text
+If the price and amount values exceed 8 decimal places, these are rounded down
+```
 
 ### - CANCEL 
 [POST] https://api.kairex.com/v1/order/cancel
 
 
-### - ORDER HISTORY (미체결된 것) 
+### - OPEN ORDER HISTORY
 [GET] https://api.kairex.com/v1/order/history
+
 Params : `quote`, `base` 
 
 ### - TX HISTORY 
 [GET] https://api.kairex.com/v1/order/tx/history
 
-
+Params : `quote`, `base`, `page`, `rows`
