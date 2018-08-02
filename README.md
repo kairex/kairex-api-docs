@@ -8,7 +8,7 @@ This page explains how to use our API and how to set up your software for using 
 NOTE: Request limit
 
 The number of requests are limited based on IP for public API or on API key for private API. 
-You cannot ask more than 600 requests per 10 minutes. 
+You cannot ask more than 1200 requests per 10 minutes. 
 If you exceed this limit, Kairex returns http status code 429, meaning "too many requests in a given amount of time". 
 ```
 
@@ -116,8 +116,9 @@ URL : [POST] https://api.kairex.com/v1/order/buy
 Request : `quote`, `base`, `price`, `amount` 
 (If the price and amount values exceed 8 decimal places, these are rounded down)
 
-Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}
-           {"code":"INSUFFICIENT","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
+Response : {"orderId":"OD1533205796033_KR00_XXXX","httpStatusCode":200,"httpStatus":"OK"}
+           {"code":"INSUFFICIENT","httpStatus":"BAD_REQUEST","httpStatusCode":400}
+           
 ```
 
 ### - SELL 
@@ -127,8 +128,30 @@ URL : [POST] https://api.kairex.com/v1/order/sell
 Request : `quote`, `base`, `price`, `amount`
 (If the price and amount values exceed 8 decimal places, these are rounded down)
 
-Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}
+Response : {"orderId":"OD1533205841812_KR00_XXXX","httpStatusCode":200,"httpStatus":"OK"}
            {"code":"INSUFFICIENT","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
+```
+
+### - ORDER STATUS
+```text
+URL : [GET] https://api.kairex.com/v1/order/status
+
+Request : `orderId`
+
+Response : 
+{
+  "orderId":"OD1533205269004_KR00_XWRG"
+  ,"base":"KAI"
+  ,"quote":"BTC"
+  ,"tradeType":"ORDER"
+  ,"orderType":"BUY"
+  ,"orderDateTime":"1533237669"
+  ,"price":"0.00000000"
+  ,"amount":"1"
+  ,"leftAmount":"1"
+  ,"cancelStatus":"NON"
+  ,"cancelTxDateTime":""
+}
 ```
 
 ### - CANCEL 
@@ -142,6 +165,7 @@ Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}
            {"code":"ORDER_NOT_FOUND","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
            {"detail":[{"field":"orderId","code":"EMPTY"}],"httpStatusCode":400,"code":"VALIDATION_FAIL","httpStatus":"BAD_REQUEST"}
 ```
+
 ### - OPEN ORDER HISTORY
 ```text
 URL : [GET] https://api.kairex.com/v1/order/history
@@ -152,19 +176,32 @@ Response :
 {
   "totalPages":1
   ,"currentPage":1
-  ,"totalRecords":1
-  ,"data: [{
-       "orderId":"OD1533035094142_KR00_12142"
-      ,"orderType":"SELL"
-      ,"orderDateTime":"1533035094"
-      ,"price":"1"
-      ,"amount":"0.999"
-      ,"leftAmount":"0.999"
-  }]
+  ,"totalRecords":7
+  ,"data: [
+            {
+              "orderId":"OD1533205841812_KR00_VWRG"
+              ,"orderType":"SELL"
+              ,"orderDateTime":"1533238241"
+              ,"price":"0.00000000"
+              ,"amount":"0.0001"
+              ,"leftAmount":"0.0001"
+              ,"orderStatus":"ACK"
+              ,"cancelStatus":"NON"
+            },{
+              "orderId":"OD1533205796033_KR00_QWGR"
+              ,"orderType":"BUY"
+              ,"orderDateTime":"1533238196"
+              ,"price":"0.00000000"
+              ,"amount":"0.0001"
+              ,"leftAmount":"0.0001"
+              ,"orderStatus":"ACK"
+              ,"cancelStatus":"NON"
+            }
+          ] ...
 }
-
 ```
-### - TX HISTORY 
+
+### - ORDER TX HISTORY 
 ```text
 URL : [GET] https://api.kairex.com/v1/order/tx/history
 
@@ -176,13 +213,13 @@ Response :
 ,"currentPage":1
 ,"totalRecords":2
 ,"data":[ 
-      {"orderId":"OD1533034973537_KR00_4122"
+      {"orderId":"OD1533034973537_KR00_TEWV"
       ,"txPrice":"0.00000078"
       ,"txAmount":"0.5"
       ,"fee":"0.0005"
       ,"txDateTime":"1533034974"
       },
-      {"orderId":"OD1533034047056_KR00_12342"
+      {"orderId":"OD1533034047056_KR00_SRGQ"
       ,"txPrice":"0.00000075"
       ,"txAmount":"1"
       ,"fee":"0.001"
