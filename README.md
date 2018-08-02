@@ -23,9 +23,9 @@ With the public API, you can get Kairex's market data such as ticker and orderbo
 
 ### - TICKER 
 ```text
-URL : [GET] https://api.kairex.com/v1/market/ticker?quote=BTC&base=KAI
+Request : [GET] https://api.kairex.com/v1/market/ticker?quote=BTC&base=KAI
 
-Request : `quote`, `base` 
+Parameters : `quote`, `base` 
 
 Response :          
 {
@@ -44,9 +44,9 @@ Response :
 
 ### - ORDERBOOK 
 ```text
-URL : [GET] https://api.kairex.com/v1/market/orderbook?quote=BTC&base=KAI
+Request : [GET] https://api.kairex.com/v1/market/orderbook?quote=BTC&base=KAI
 
-Request : `quote`, `base` 
+Parameters : `quote`, `base` 
 
 response : 
 {
@@ -102,18 +102,18 @@ private String signature(String apiKey, Integer nonce,String secretKey) throws E
 
 ### - USER BALANCE 
 ```text
-URL : [GET] https://api.kairex.com/v1/balance?currency=KAI
+Request : [GET] https://api.kairex.com/v1/balance?currency=KAI
 
-Request : `currency` 
+Parameter : `currency` 
 
 Response : {"currency":"BTC","available":"0.00019925","reserved":"0.00000000"}
 ```
 
 ### - BUY
 ```text
-URL : [POST] https://api.kairex.com/v1/order/buy
+Request : [POST] https://api.kairex.com/v1/order/buy
 
-Request : `quote`, `base`, `price`, `amount` 
+Parameters : `quote`, `base`, `price`, `amount` 
 (If the price and amount values exceed 8 decimal places, these are rounded down)
 
 Response : {"orderId":"OD1533205796033_KR00_XXXX","httpStatusCode":200,"httpStatus":"OK"}
@@ -123,10 +123,10 @@ Response : {"orderId":"OD1533205796033_KR00_XXXX","httpStatusCode":200,"httpStat
 
 ### - SELL 
 ```text
-URL : [POST] https://api.kairex.com/v1/order/sell
+Request : [POST] https://api.kairex.com/v1/order/sell
 
-Request : `quote`, `base`, `price`, `amount`
-(If the price and amount values exceed 8 decimal places, these are rounded down)
+Parameters : `quote`, `base`, `price`, `amount`
+(If the `price` and `amount` values exceed 8 decimal places, these are rounded down)
 
 Response : {"orderId":"OD1533205841812_KR00_XXXX","httpStatusCode":200,"httpStatus":"OK"}
            {"code":"INSUFFICIENT","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
@@ -134,9 +134,9 @@ Response : {"orderId":"OD1533205841812_KR00_XXXX","httpStatusCode":200,"httpStat
 
 ### - ORDER STATUS
 ```text
-URL : [GET] https://api.kairex.com/v1/order/status
+Request : [GET] https://api.kairex.com/v1/order/status?orderId=OD1533205269004_KR00_XWRG
 
-Request : `orderId`
+Parameter : `orderId`
 
 Response : 
 {
@@ -156,9 +156,9 @@ Response :
 
 ### - CANCEL 
 ```text
-URL : [POST] https://api.kairex.com/v1/order/cancel
+Request : [POST] https://api.kairex.com/v1/order/cancel
 
-Request : `quote`, `base`, `orderId`
+Parameters : `quote`, `base`, `orderId`
 
 Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}           
            {"code":"ALREADY_ORDERED","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
@@ -168,9 +168,9 @@ Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}
 
 ### - OPEN ORDER HISTORY
 ```text
-URL : [GET] https://api.kairex.com/v1/order/history
+Request : [GET] https://api.kairex.com/v1/order/history?quote=KAI&base=BTC&page=1&rows=10
 
-Request : `quote`, `base`, `page`, `rows` 
+Parameters : `quote`, `base`, `page`, `rows` 
 
 Response : 
 {
@@ -203,9 +203,9 @@ Response :
 
 ### - ORDER TX HISTORY 
 ```text
-URL : [GET] https://api.kairex.com/v1/order/tx/history
+Request : [GET] https://api.kairex.com/v1/order/tx/history?quote=KAI&base=BTC&page=1&rows=10
 
-Request : `quote`, `base`, `page`, `rows`
+Parameters : `quote`, `base`, `page`, `rows`
 
 Response : 
 {
