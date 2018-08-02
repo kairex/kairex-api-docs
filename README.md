@@ -70,7 +70,7 @@ response :
 
 To use our account API, it is required to provide your API key, a nonce and a signature in your request header. 
 
-**X-KAIREX-APIKEY** : Your API key value. You can get a pair of an API key and secret key from https://www.kairex.com/mypage/openApi. 
+**X-KAIREX-APIKEY** : Your API key value. 
 
 **X-KAIREX-NONCE** : An integer number which must be incremented with your every request. We generally use unix time as a nonce. 
 
