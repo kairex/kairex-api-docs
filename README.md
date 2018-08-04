@@ -102,11 +102,13 @@ private String signature(String apiKey, Integer nonce,String secretKey) throws E
 
 ### - USER BALANCE 
 ```text
-Request : [GET] https://api.kairex.com/v1/balance?currency=KAI
+Request : [GET] https://api.kairex.com/v1/balance
 
-Parameter : `currency` 
-
-Response : {"currency":"BTC","available":"0.00019925","reserved":"0.00000000"}
+Response : [
+   {"currency":"BHPC","available":"3","reserved":"0.00000000"}
+  ,{"currency":"BTC","available":"0.00000001","reserved":"0.00000000"}
+  ,{"currency":"KAI","available":"9.9959997","reserved":"0.0031"}
+]
 ```
 
 ### - BUY
@@ -134,13 +136,13 @@ Response : {"orderId":"OD1533205841812_KR00_XXXX","httpStatusCode":200,"httpStat
 
 ### - ORDER STATUS
 ```text
-Request : [GET] https://api.kairex.com/v1/order/status?orderId=OD1533205269004_KR00_XWRG
+Request : [GET] https://api.kairex.com/v1/order/status?orderId=OD1533205269004_KR00_XWRG_lu0asfb
 
 Parameter : `orderId`
 
 Response : 
 {
-  "orderId":"OD1533205269004_KR00_XWRG"
+  "orderId":"OD1533205269004_KR00_XWRG_lu0asfb"
   ,"base":"KAI"
   ,"quote":"BTC"
   ,"tradeType":"ORDER"
@@ -168,9 +170,10 @@ Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}
 
 ### - OPEN ORDER HISTORY
 ```text
-Request : [GET] https://api.kairex.com/v1/order/history?quote=KAI&base=BTC&page=1&rows=10
+Request : [GET] https://api.kairex.com/v1/order/history?quote=KAI&base=BTC&rows=10
 
-Parameters : `quote`, `base`, `page`, `rows` 
+Parameters : `quote`, `base`, `rows` 
+`rows` is optional and its maximum value is 20.
 
 Response : 
 {
@@ -179,7 +182,7 @@ Response :
   ,"totalRecords":7
   ,"data: [
             {
-              "orderId":"OD1533205841812_KR00_VWRG"
+              "orderId":"OD1533205841812_KR00_VWRG_csegpoA"
               ,"orderType":"SELL"
               ,"orderDateTime":"1533238241"
               ,"price":"0.00000000"
@@ -188,7 +191,7 @@ Response :
               ,"orderStatus":"ACK"
               ,"cancelStatus":"NON"
             },{
-              "orderId":"OD1533205796033_KR00_QWGR"
+              "orderId":"OD1533205796033_KR00_QWGR_piNliSa"
               ,"orderType":"BUY"
               ,"orderDateTime":"1533238196"
               ,"price":"0.00000000"
@@ -203,9 +206,10 @@ Response :
 
 ### - ORDER TX HISTORY 
 ```text
-Request : [GET] https://api.kairex.com/v1/order/tx/history?quote=KAI&base=BTC&page=1&rows=10
+Request : [GET] https://api.kairex.com/v1/order/tx/history?quote=KAI&base=BTC&rows=10
 
-Parameters : `quote`, `base`, `page`, `rows`
+Parameters : `quote`, `base`, `rows`
+`rows` is optional and its maximum value is 20.
 
 Response : 
 {
