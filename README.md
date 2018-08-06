@@ -8,7 +8,7 @@ This page explains how to use our API and how to set up your software for using 
 NOTE: Request limit
 
 The number of requests are limited based on IP for public API or on API key for private API. 
-You cannot ask more than 1200 requests per 10 minutes. 
+You cannot ask more than 120 requests per one minute. 
 If you exceed this limit, Kairex returns http status code 429, meaning "too many requests in a given amount of time". 
 ```
 
@@ -72,10 +72,23 @@ To use our account API, it is required to provide your API key, a nonce and a si
 
 **X-KAIREX-APIKEY** : Your API key value. 
 
-**X-KAIREX-NONCE** : An integer number which must be incremented with your every request. We generally use unix time as a nonce. 
+If it is not found in request header, we return `{"code":"API_KEY_REQUIRED","httpStatus":"BAD_REQUEST","httpStatusCode":400}`.
+
+If its value is not in KAiREX service, we return `{"code":"API_KEY_NOT_IN_KAIREX","httpStatus":"NOT_FOUND","httpStatusCode":404}`.
+
+
+**X-KAIREX-NONCE** : An integer number which must be incremented with your every request. We strongly suggest you to use unix time as a nonce. 
+
+If we cannot parse a nonce, we return `{"code":"NONCE_PARSING_ERROR","httpStatus":"BAD_REQUEST","httpStatusCode":400}`.
+
+If it is decreasing, we return `{"code":"DECREASED_NONCE_ERROR","httpStatus":"BAD_REQUEST","httpStatusCode":400}`.
+
+If it is the same with previous nonce, we return `{"code":"SAME_NONCE_ERROR","httpStatus":"BAD_REQUEST","httpStatusCode":400}`.
+
 
 **X-KAIREX-SIGNATURE** : A signature which you make with your secret key, API key and a nonce. This is an HMAC-SHA256 encoded message containing a nonce and your API key. 
 
+If your signature authentication fails, we return `{"code":"AUTHENTICATION_FAIL","httpStatus":"BAD_REQUEST","httpStatusCode":400}`.
 
 For more details, please refer to the following samples. 
 
@@ -111,6 +124,12 @@ Response : [
 ]
 ```
 
+
+
+#### * NOTE
+1. When intervals between your orders are too short, nonce errors can occur. Please set intervals between orders to at least 200 milliseconds.
+2. If the price and amount of one order are the same as those of its previous order, KAiREX regards it as the duplicated order and returns HTTP status code 400.
+
 ### - BUY
 ```text
 Request : [POST] https://api.kairex.com/v1/order/buy
@@ -120,7 +139,7 @@ Parameters : `quote`, `base`, `price`, `amount`
 
 Response : {"orderId":"OD1533205796033_KR00_XXXX","httpStatusCode":200,"httpStatus":"OK"}
            {"code":"INSUFFICIENT","httpStatus":"BAD_REQUEST","httpStatusCode":400}
-           
+           {"code":"DUPLICATED_ORDER","httpStatus":"BAD_REQUEST","httpStatusCode":400}
 ```
 
 ### - SELL 
@@ -132,6 +151,7 @@ Parameters : `quote`, `base`, `price`, `amount`
 
 Response : {"orderId":"OD1533205841812_KR00_XXXX","httpStatusCode":200,"httpStatus":"OK"}
            {"code":"INSUFFICIENT","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
+           {"code":"DUPLICATED_ORDER","httpStatus":"BAD_REQUEST","httpStatusCode":400}
 ```
 
 ### - ORDER STATUS
@@ -165,6 +185,7 @@ Parameters : `quote`, `base`, `orderId`
 Response : {"code":"SUCCESS","httpStatusCode":200,"httpStatus":"OK"}           
            {"code":"ALREADY_ORDERED","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
            {"code":"ORDER_NOT_FOUND","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
+           {"code":"ALREADY_FINISHED","httpStatusCode":400,"httpStatus":"BAD_REQUEST"}
            {"detail":[{"field":"orderId","code":"EMPTY"}],"httpStatusCode":400,"code":"VALIDATION_FAIL","httpStatus":"BAD_REQUEST"}
 ```
 
